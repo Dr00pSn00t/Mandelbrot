@@ -21,7 +21,7 @@ int main()
     text.setFillColor(sf::Color::White);
 
     while (window.isOpen())
-	{
+    {
 
 		/*
 		****************************************
