@@ -5,8 +5,8 @@ int main()
     const string font_name =        //haven't chosen a font yet..
 
     int pixelWidth = VideoMode::getDesktopMode().width / 2;
-	int pixelHeight = VideoMode::getDesktopMode().height / 2;
-	VideoMode vm(pixelWidth, pixelHeight);
+    int pixelHeight = VideoMode::getDesktopMode().height / 2;
+    VideoMode vm(pixelWidth, pixelHeight);
     RenderWindow window(vm, "Mandelbrot", Style::Default);
 
     Font font;
