@@ -1,51 +1,52 @@
 #include "ComplexPlane.h"
 
-ComplexPlane(int pixelWidth, int pixelHeight)
+ComplexPLane::ComplexPlane(int pixelWidth, int pixelHeight)
 {
 
 }
 
-const void draw(RenderTarget& target, RenderStates states)
+void ComplexPlane::draw(RenderTarget& target, RenderStates states) const
 {
 
 }
 
-void zoomIn()
+void ComplexPlane::zoomIn()
 {
 
 }
 
-void zoomOut()
+void ComplexPlane::zoomOut()
 {
 
 }
 
-void setCenter(vector<Vector2i> mousePixel)
+void ComplexPlane::setCenter(vector<Vector2i> mousePixel)
 {
 
 }
 
-void loadText(Text& text)
+void ComplexPlane::loadText(Text& text)
 {
 
 }
 
-void updateRender()
+void ComplexPlane::updateRender()
 {
 
 }
 
-int countIterations(vector<Vector2f> coord)
+int ComplexPlane::countIterations(vector<Vector2f> coord)
 {
 
 }
 
-void iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
+void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
 {
 
 }
 
-vector<Vector2f> mapPixelToCoords(vector<Vector2i> mousePixel)
+ComplexPlane::vector<Vector2f> mapPixelToCoords(vector<Vector2i> mousePixel)
 {
 
 }
+
