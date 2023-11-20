@@ -1,4 +1,5 @@
 #include "ComplexPlane.h"
+#include <cmath> //For powers, zoomIn()
 
 ComplexPLane::ComplexPlane(int pixelWidth, int pixelHeight)
 {
@@ -31,37 +32,129 @@ ComplexPLane::ComplexPlane(int pixelWidth, int pixelHeight)
 
 void ComplexPlane::draw(RenderTarget& target, RenderStates states) const
 {
-
+    //his function only needs one line of code:
+    target.draw(m_vArray);
 }
 
 void ComplexPlane::zoomIn()
 {
+    // Increment m_zoomCount
+    m_zoomCount++;
 
+    // Set a local variable for the x size to BASE_WIDTH * (BASE_ZOOM to the m_ZoomCount power)
+    int x_size = BASE_WIDTH * pow(BASE_ZOOM, m_ZoomCount);
+
+    // Set a local variable for the y size to BASE_HEIGHT * m_aspectRatio * (BASE_ZOOM to the m_ZoomCount power)
+    int y_size = BASE_HEIGHT * m_aspectRatio * pow(BASE_ZOOM, m_ZoomCount);
+
+    // Assign m_plane_size with this new size
+    m_plane_size.push_back(Vector2f(x_size, y_size));
+
+    // Set m_State to CALCULATING
+    m_State = State::CALCULATING;
 }
 
 void ComplexPlane::zoomOut()
 {
+    // Decrement m_zoomCount
+    m_zoomCount--;
 
+    // Set a local variable for the x size to BASE_WIDTH * (BASE_ZOOM to the m_ZoomCount power)
+    int x_size = BASE_WIDTH * pow(BASE_ZOOM, m_ZoomCount);
+
+    // Set a local variable for the y size to BASE_HEIGHT * m_aspectRatio * (BASE_ZOOM to the m_ZoomCount power)
+    int y_size = BASE_HEIGHT * m_aspectRatio * pow(BASE_ZOOM, m_ZoomCount);
+
+    // Assign m_plane_size with this new size
+    m_plane_size.push_back(Vector2f(x_size, y_size));
+
+    // Set m_State to CALCULATING
+    m_State = State::CALCULATING;
 }
 
 void ComplexPlane::setCenter(vector<Vector2i> mousePixel)
 {
+    // Use ComplexPlane::mapPixelToCoords to find the Vector2f coordinate in the complex plane that corresponds to the screen pixel location
+    // Assign m_plane_center with this coordinate
+    m_plane_center = ComplexPlane::mapPixelToCoords(???); // ??? what to put as arguments
 
+    // Set m_State to CALCULATING
+    m_State = State::CALCULATING;
+}
+
+void ComplexPlane::setMouseLocation(Vector2i mousePixel)
+{
+    // Use ComplexPlane::mapPixelToCoords to find the Vector2f coordinate in the complex plane that corresponds to the screen pixel location
+    // Assign m_mouseLocation with this coordinate
+    m_mouseLocation = ComplexPlane::mapPixelToCoords(???) // ??? what to put as arguments 
 }
 
 void ComplexPlane::loadText(Text& text)
 {
+    /* Use a stringstream and the corresponding member variables to create the following output:
 
+    Mandelbrot Set
+    Center: (0, 0)                  // m_plane_center
+    Cursor: (-1.05313, 0.828125)    // m_mouseLocation
+    Left-click to Zoom in
+    Right-click to Zoom out
+    */
+
+    stringstream info_message;
+
+    info_message <<
+    "Mandelbrot Set" << endl <<
+    "Center: (" << m_plane_center.x << ", " << m_plane_center.y << ")" << endl <<
+    "Cursor: (" << m_mouseLocation.max_size << ", " << m_mouseLocation.y << ")" << endl
+    "Left-click to Zoom in" << endl <<
+    "Right-click to Zoom out";
+    
+    text.setString(info_message);
 }
 
 void ComplexPlane::updateRender()
 {
+    // If m_State is CALCULATING
+    if (m_State == CALCULATING)
+    {   
+        // Create a double for loop to loop through all pixels in the screen height and width
+            // Use j for x and i for y 
+                // Note:  be careful not to transpose these!
+        for (int j = 0; j < m_pixel_size[0].x; j++) {
+            for (int i = 0; i < m_pixel_size[0].y; i++) 
+            {
+                // Set the position variable in the element of VertexArray that corresponds to the screen coordinate j,i
+                    // This involves mapping the two-dimensional position at j,i to its one-dimensional array index:
+                         // vArray[j + i * pixelWidth].position = { (float)j,(float)i };
+                m_vArray[j + i * pixelWidth].position = { (float)j,(float)i };
 
+                // Use ComplexPlane::mapPixelToCoords to find the Vector2f coordinate in the complex plane that corresponds to the screen pixel location at j,i
+                // Call ComplexPlane::countIterations with the Vector2f coordinate as its argumentand store the number of iterations
+                int iter = ComplexPlane::countIterations(ComplexPlane::mapPixelToCoords(Vector2i(j, i))); // ???
+
+                // Declare three local Uint8 variables r,g,b to store the RGB values for the current pixel
+                    // Uint8 is an alias for unsigned char
+                Uint8 r;
+                Uint8 g;
+                Uint8 b;
+
+                // Pass the number of iterations and the RGB variables into ComplexPlane::iterationsToRGB
+                    // This will assign the RGB values by reference
+                ComplexPlane::iterationsToRGB(iter, r, g, b);
+
+                // Set the color variable in the element of VertexArray that corresponds to the screen coordinate j,i
+                m_vArray[j + i * pixelWidth].color = { r,g,b };
+            }
+        }
+        // Set the state to DISPLAYING
+        m_State = State::DISPLAYING;
+    }
 }
 
 int ComplexPlane::countIterations(vector<Vector2f> coord)
 {
-
+    // Count the number of iterations of the set for the given coordinate as specified above
+    // ???
 }
 
 void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
@@ -69,7 +162,7 @@ void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
 
 }
 
-ComplexPlane::vector<Vector2f> mapPixelToCoords(vector<Vector2i> mousePixel)
+vector<Vector2f> ComplexPlane::mapPixelToCoords(vector<Vector2i> mousePixel)
 {
 
 }

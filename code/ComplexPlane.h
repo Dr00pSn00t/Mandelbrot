@@ -27,6 +27,7 @@ public:
     void zoomIn();
     void zoomOut();
     void setCenter(vector<Vector2i> mousePixel);
+    void setMouseLocation(Vector2i mousePixel);
     void loadText(Text& text);
     void updateRender();
 
