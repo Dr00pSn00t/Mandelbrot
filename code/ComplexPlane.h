@@ -1,13 +1,12 @@
-#ifndef COMPLEXPLANEH
-#define COMPLEXPLANEH
+#ifndef COMPLEX_PLANE_H
+#define COMPLEX_PLANE_H
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
-
 
 using namespace sf;
 using namespace std;
@@ -23,26 +22,27 @@ class ComplexPlane : public Drawable
 {
 public:
     ComplexPlane(int pixelWidth, int pixelHeight);
-    const void draw(RenderTarget& target, RenderStates states);
+    void draw(RenderTarget& target, RenderStates states) const;
     void zoomIn();
     void zoomOut();
-    void setCenter(vector<Vector2i> mousePixel);
+    void setCenter(Vector2i mousePixel);
     void setMouseLocation(Vector2i mousePixel);
     void loadText(Text& text);
     void updateRender();
 
-    int countIterations(vector<Vector2f> coord);
-    void iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b);
-    vector<Vector2f> mapPixelToCoords(vector<Vector2i> mousePixel);
-    
-
 private:
+    int countIterations(Vector2f coord);
+    void iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b);
+    Vector2f mapPixelToCoords(Vector2i mousePixel);
+
     VertexArray m_vArray;
     State m_State;
-    vector<Vector2f> m_mouseLocation;
-    vector<Vector2i> m_pixel_size;
-    vector<Vector2f> m_plane_center;
-    vector<Vector2f> m_plane_size;
+    Vector2f m_mouseLocation;
+    Vector2i m_pixel_size;
+    Vector2f m_plane_center;
+    Vector2f m_plane_size;
     int m_zoomCount;
     float m_aspectRatio;
 };
+
+#endif // COMPLEX_PLANE_H
