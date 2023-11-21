@@ -1,7 +1,7 @@
 #include "ComplexPlane.h"
 #include <cmath> //For powers, zoomIn()
 
-ComplexPLane::ComplexPlane(int pixelWidth, int pixelHeight)
+ComplexPlane::ComplexPlane(int pixelWidth, int pixelHeight)
 {
     // Assign m_pixelWidth with the parameter values
     m_pixel_size = Vector2i(pixelWidth, pixelHeight);
@@ -42,10 +42,10 @@ void ComplexPlane::zoomIn()
     m_zoomCount++;
 
     // Set a local variable for the x size to BASE_WIDTH * (BASE_ZOOM to the m_ZoomCount power)
-    int x_size = BASE_WIDTH * pow(BASE_ZOOM, m_ZoomCount);
+    int x_size = BASE_WIDTH * pow(BASE_ZOOM, m_zoomCount);
 
     // Set a local variable for the y size to BASE_HEIGHT * m_aspectRatio * (BASE_ZOOM to the m_ZoomCount power)
-    int y_size = BASE_HEIGHT * m_aspectRatio * pow(BASE_ZOOM, m_ZoomCount);
+    int y_size = BASE_HEIGHT * m_aspectRatio * pow(BASE_ZOOM, m_zoomCount);
 
     // Assign m_plane_size with this new size
     m_plane_size = Vector2f(x_size, y_size);
@@ -60,10 +60,10 @@ void ComplexPlane::zoomOut()
     m_zoomCount--;
 
     // Set a local variable for the x size to BASE_WIDTH * (BASE_ZOOM to the m_ZoomCount power)
-    int x_size = BASE_WIDTH * pow(BASE_ZOOM, m_ZoomCount);
+    int x_size = BASE_WIDTH * pow(BASE_ZOOM, m_zoomCount);
 
     // Set a local variable for the y size to BASE_HEIGHT * m_aspectRatio * (BASE_ZOOM to the m_ZoomCount power)
-    int y_size = BASE_HEIGHT * m_aspectRatio * pow(BASE_ZOOM, m_ZoomCount);
+    int y_size = BASE_HEIGHT * m_aspectRatio * pow(BASE_ZOOM, m_zoomCount);
 
     // Assign m_plane_size with this new size
     m_plane_size = Vector2f(x_size, y_size);
@@ -86,7 +86,7 @@ void ComplexPlane::setMouseLocation(Vector2i mousePixel)
 {
     // Use ComplexPlane::mapPixelToCoords to find the Vector2f coordinate in the complex plane that corresponds to the screen pixel location
     // Assign m_mouseLocation with this coordinate
-    m_mouseLocation = ComplexPlane::mapPixelToCoords(mousePixel)
+    m_mouseLocation = ComplexPlane::mapPixelToCoords(mousePixel);
 }
 
 void ComplexPlane::loadText(Text& text)
@@ -106,11 +106,11 @@ void ComplexPlane::loadText(Text& text)
     info_message <<
     "Mandelbrot Set" << endl <<
     "Center: (" << m_plane_center.x << ", " << m_plane_center.y << ")" << endl <<
-    "Cursor: (" << m_mouseLocation.max_size << ", " << m_mouseLocation.y << ")" << endl
+    "Cursor: (" << m_mouseLocation.x << ", " << m_mouseLocation.y << ")" << endl <<
     "Left-click to Zoom in" << endl <<
     "Right-click to Zoom out";
     
-    text.setString(info_message);
+    text.setString(info_message.str());
 }
 
 void ComplexPlane::updateRender()
@@ -121,13 +121,13 @@ void ComplexPlane::updateRender()
         // Create a double for loop to loop through all pixels in the screen height and width
             // Use j for x and i for y 
                 // Note:  be careful not to transpose these!
-        for (int j = 0; j < m_pixel_size[0].x; j++) {
-            for (int i = 0; i < m_pixel_size[0].y; i++) 
+        for (int j = 0; j < m_pixel_size.x; j++) {
+            for (int i = 0; i < m_pixel_size.y; i++) 
             {
                 // Set the position variable in the element of VertexArray that corresponds to the screen coordinate j,i
                     // This involves mapping the two-dimensional position at j,i to its one-dimensional array index:
                          // vArray[j + i * pixelWidth].position = { (float)j,(float)i };
-                m_vArray[j + i * pixelWidth].position = { (float)j,(float)i };
+                m_vArray[j + i * m_pixel_size.x].position = { (float)j,(float)i };
 
                 // Use ComplexPlane::mapPixelToCoords to find the Vector2f coordinate in the complex plane that corresponds to the screen pixel location at j,i
                 // Call ComplexPlane::countIterations with the Vector2f coordinate as its argumentand store the number of iterations
@@ -144,7 +144,7 @@ void ComplexPlane::updateRender()
                 ComplexPlane::iterationsToRGB(iter, r, g, b);
 
                 // Set the color variable in the element of VertexArray that corresponds to the screen coordinate j,i
-                m_vArray[j + i * pixelWidth].color = { r,g,b };
+                m_vArray[j + i * m_pixel_size.x].color = { r,g,b };
             }
         }
         // Set the state to DISPLAYING
