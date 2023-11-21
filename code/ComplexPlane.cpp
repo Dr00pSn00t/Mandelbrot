@@ -131,7 +131,7 @@ void ComplexPlane::updateRender()
                 m_vArray[j + i * m_pixel_size.x].position = { (float)j,(float)i };
 
                 // Use ComplexPlane::mapPixelToCoords to find the Vector2f coordinate in the complex plane that corresponds to the screen pixel location at j,i
-                // Call ComplexPlane::countIterations with the Vector2f coordinate as its argumentand store the number of iterations
+                // Call ComplexPlane::countIterations with the Vector2f coordinate as its argument and store the number of iterations
                 int iter = ComplexPlane::countIterations(ComplexPlane::mapPixelToCoords(Vector2i(j, i))); // ???
 
                 // Declare three local Uint8 variables r,g,b to store the RGB values for the current pixel
