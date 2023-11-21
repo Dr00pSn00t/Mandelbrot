@@ -2,8 +2,6 @@
 #define COMPLEX_PLANE_H
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
 #include <iostream>
 #include <sstream>
 #include <vector>
