@@ -1,5 +1,6 @@
 #include "ComplexPlane.h"
 #include <cmath> //For powers, zoomIn()
+#include <complex> // std::complex, std::abs
 
 ComplexPlane::ComplexPlane(int pixelWidth, int pixelHeight)
 {
@@ -155,15 +156,69 @@ void ComplexPlane::updateRender()
 int ComplexPlane::countIterations(Vector2f coord)
 {
     // Count the number of iterations of the set for the given coordinate as specified above
-    // ???
+
+    complex<double> c (coord.x, coord.y);
+    complex<double> z(0, 0);
+
+    for (int i = 0; i < MAX_ITER; i++)
+    {
+        z = z * z + c;
+        if (abs(z) > 2.0) return i;
+    }
+    return MAX_ITER;
 }
 
 void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
 {
+    // Open to multiple method of coloration
 
+    if (count == MAX_ITER) // 100%
+    {
+        // Black
+        r = 0;
+        g = 0;
+        b = 0;
+    }
+    else if (count > MAX_ITER / 5 * 4) // 80% - 99%
+    {
+        // Red
+        r = 255;
+        g = 0;
+        b = 0;
+    }
+    else if (count > MAX_ITER / 5 * 3) // 60% - 79%
+    {
+        // Yellow
+        r = 255;
+        g = 255;
+        b = 0;
+    }
+    else if (count > MAX_ITER / 5 * 2) // 40% - 59%
+    {
+        // Green
+        r = 0;
+        g = 255;
+        b = 0;
+    }
+    else if (count > MAX_ITER / 5 * 1) // 20% - 39%
+    {
+        // Turquoise
+        r = 64;
+        g = 224;
+        b = 208;
+    }
+    else // 1% - 19%
+    {
+        // Purple
+        r = 128;
+        g = 0;
+        b = 128;
+    }
 }
 
 Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel)
 {
+    // The purpose of this function is to map a pixel location on your monitor to a coordinate in the complex plane
+    
 
 }
