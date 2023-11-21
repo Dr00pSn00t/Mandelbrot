@@ -219,6 +219,12 @@ void ComplexPlane::iterationsToRGB(size_t count, Uint8& r, Uint8& g, Uint8& b)
 Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel)
 {
     // The purpose of this function is to map a pixel location on your monitor to a coordinate in the complex plane
-    
 
+    float x;
+    float y;
+
+    x = ((mousePixel.x - m_plane_center.x) / (m_plane_size.x - m_plane_center.x)) * (m_plane_size.x) + (m_plane_center.x - m_plane_size.x / 2.0);
+    y = ((mousePixel.y - m_plane_size.y) / (m_plane_center.y - m_plane_size.y)) * (m_plane_size.y) + (m_plane_center.y - m_plane_size.y / 2.0);
+
+    return Vector2f(x, y);
 }
