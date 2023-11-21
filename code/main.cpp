@@ -2,7 +2,7 @@
 
 int main()
 {
-	const string font_name = "arial.ttf";   
+	const string font_name = "Verdana.ttf";   
 
 	//create the window
     int pixelWidth = VideoMode::getDesktopMode().width / 2;
