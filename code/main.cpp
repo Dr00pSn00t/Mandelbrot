@@ -53,7 +53,7 @@ int main()
 			}
 			if (event.type == sf::Event::MouseMoved)				//update cursor location 
 			{
-				plane.setMouseLocation(Vector2i(event.mouseButton.x, event.mouseButton.y));
+				plane.setMouseLocation(Vector2i(event.mouseMove.x, event.mouseMove.y));
 			}
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Escape))
