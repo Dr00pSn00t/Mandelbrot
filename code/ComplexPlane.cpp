@@ -158,7 +158,7 @@ int ComplexPlane::countIterations(Vector2f coord)
     // Count the number of iterations of the set for the given coordinate as specified above
 
     complex<double> c (coord.x, coord.y);
-    complex<double> z(0, 0);
+    complex<double> z (0, 0);
 
     for (int i = 0; i < MAX_ITER; i++)
     {
