@@ -1,6 +1,4 @@
 #include "ComplexPlane.h"
-#include <cmath> //For powers, zoomIn()
-#include <complex> // std::complex, std::abs
 
 ComplexPlane::ComplexPlane(int pixelWidth, int pixelHeight)
 {

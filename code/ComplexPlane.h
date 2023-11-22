@@ -5,6 +5,8 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <cmath>
+#include <complex>
 
 using namespace sf;
 using namespace std;
